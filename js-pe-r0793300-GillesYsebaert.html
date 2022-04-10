@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulier</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/stijl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/stijl.css" />
+    <script type="text/javascript">
+      let errors = new Array();
+      //https://www.tutorialspoint.com/javascript/javascript_form_validations.htm
+      //https://hackerthemes.com/bootstrap-cheatsheet/
+        function  validateForm(){
+          errors = [];
+          checkAllEmptyFields();
+          validatePassword();
+          checkPC();
+          validatePayment();
+          validateCheckbox();
+
+          if(errors.length == 0){
+            document.getElementById("errorOutput").innerHTML = "Aww yeah, je werd geregistreerd.";
+            document.getElementById("errorTitle").innerHTML = "Goed gedaan!";
+            return true
+          }
+          else{
+          document.getElementById("errorOutput").innerHTML = errors;
+          return false
+          }
+        }
+        function editBetalingswijzeBox(){
+          if(document.getElementsByName(exampleradios1).value == "Banking app"){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is banking app"
+          }
+          if(document.getElementByName(exampleradios1).value == "Overschrijving"){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is overschrijving"
+          }
+        }
+        function checkEmptyField(id, errormessage){
+          if(document.getElementById(id).value.length == 0){
+            errors.push(errormessage);
+          }
+        }
+        function checkAllEmptyFields(){
+          checkEmptyField("txt0", "Vul de voornaam in.\n");
+          checkEmptyField("txt1", "Vul de achternaam in.\n");
+          checkEmptyField("txt2", "Vul de gebruikersnaam in.\n");
+          checkEmptyField("txt3", "Vul het email adres in\n");
+          checkEmptyField("txt6", "Vul het adres in.\n");
+          checkEmptyField("txt7", "Selecteer een land.\n");
+          checkEmptyField("txt8", "Selecteer een provincie.\n");
+        }
+        function validatePassword(){
+          if(document.getElementById("txt4").value.length < 8){
+            errors.push("Vul een wachtwoord in met minstens 8 tekens\n");
+          }
+          if(document.getElementById("txt4").value.length == 0){
+            errors.push("Vul een wachtwoord in\n");
+          }
+          if(document.getElementById("txt5").value.length == 0){
+            errors.push("Vul het wachtwoord herhalen in\n");
+          }
+          if(document.getElementById("txt5").value != document.getElementById("txt4").value){
+            errors.push("Het herhaalde wachtwoord komt niet overeen met het originele wachtwoord\n");
+          }
+        }
+        function checkPC(){
+          let value = Number(document.getElementById("txt9").value);
+          if(value<1000 || value>=10000){
+            errors.push("Het wachtwoord moet tussen 1000 en 9999 liggen\n");
+          }
+        }
+        function validateCheckbox(){
+          if(!document.getElementById("exampleCheckboxes2").checked){
+            errors.push("U moet akkoord gaan met de algemene voorwaarden om het formulier te versturen.")
+          }
+        }
+        
+        function validatePayment(){
+          if(document.getElementById("exampleRadios1").checked){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is banking app"
+          }
+          if(document.getElementById("exampleRadios2").checked){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is overschrijving"
+          }
+          if(document.getElementById("exampleRadios3").checked){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is visa card"
+          }
+          if(document.getElementById("exampleRadios4").checked){
+            document.getElementById("betalingswijzeOutput").innerHTML = "Je betalingswijze is paypal"
+          }
+        }
+
+    </script>
+    
+</head>
+<body>
+  <div class = "col-md-8">
+    <div class="container">
+    <form
+    action="mailto:gilles.ysebaert@live.be"
+    method="post"
+    enctype="text/plain"
+    name="myform"
+    onsubmit="return validateForm()">
+
+      <div class="col-md-10">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="txt0" name="FirstName">Voornaam</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="txt0"
+                    placeholder="John"
+                />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="txt1" name="LastName">Naam</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="txt1"
+                    placeholder="Doe"
+                />
+            </div>
+            <div class="form-group col-md-4">
+              <label for="txt2">Gebruikersnaam</label>
+              <input
+                  type="text"
+                  class="form-control"
+                  id="txt2"
+                  placeholder="r0793300"
+              />
+          </div>
+      </div>
+      <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="txt3">Email adres</label>
+                <input
+                type="email"
+                name="Inputemail"
+                class="form-control"
+                id="txt3"
+                placeholder="john.doe@gmail.com"
+                />
+            </div>
+            <div class="form-group col-md-3">
+                    <label for="txt4" name="Password">Wachtwoord</label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="txt4"
+                    />
+                    <p>Je wachtwoord moet minstens 8 tekens lang zijn.</p>
+            </div>
+            <div class="form-group col-md-3">
+                    <label for="txt5" name="PasswordRepeat">Wachtwoord herhalen</label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="txt5"
+                    />
+            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="txt6">Adres</label>
+            <input
+            type="text"
+            class="form-control"
+            id="txt6"
+            placeholder="Trammesantlei 123"
+            />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4">
+          <label for="txt7">Land</label>
+          <select class="custom-select" id="txt7">
+            <option selected disabled value="">Kies het land hier</option>
+            <option>België</option>
+            <option>Nederland</option>
+            <option>Duitsland</option>
+            <option>Frankrijk</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="txt8">Provincie</label>
+          <select class="custom-select" id="txt8">
+            <option selected disabled value="">Kies de provincie hier</option>
+            <option>Antwerpen</option>
+            <option>Limburg</option>
+            <option>Vlaams Brabant</option>
+            <option>Oost-Vlaanderen</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="txt9" name="Postcode">Postcode</label>
+          <input
+          type="number"
+          class="form-control"
+          id="txt9"
+          name="Postcode"
+          />
+        </div>
+      </div>
+      <div class ="form-row">
+        <div class="col-md-6">
+          <div class="form-check">
+            <h3>Betalingswijze</h3>
+            <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Banking app
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+              Overschrijving
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios3" value="option3">
+            <label class="form-check-label" for="exampleRadios3">
+              Visa card
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios4" value="option4">
+            <label class="form-check-label" for="exampleRadios4">
+              PayPal
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exampleCheckboxes1" id="exampleCheckboxes1" value="option1">
+            <label class="form-check-label" for="exampleCheckboxes1">
+              Inschrijven voor onze nieuwsbrief
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exampleCheckboxes2" id="exampleCheckboxes2" value="option2">
+            <label class="form-check-label" for="exampleCheckboxes2">
+              Ik ga akkoord met de algemene voorwaarden
+            </label>
+          </div>
+        </div>
+      <br/>
+      <input type="submit" value="Sign in">
+      <label id="output">
+    </div>
+  </div>
+</div>
+  </form>
+</div>
+<div class = "col-md-3">
+  <div class="alert alert-danger alert-dismissible fade show " id="errorboxdiv" role="alert">
+
+    <h3 id="errorTitle">Yikes, errors</h3>
+   <p id="errorOutput"></p>
+  </div>
+  <div class="alert alert-primary alert-dismissible fade show " role="alert">
+
+    <h3>Betalingswijze</h3>
+   <p id="betalingswijzeOutput">Je betalingswijze is banking app</p>
+  </div>
+</div>
+
+
+    <script src="/js/bootstrap.js"></script>
+
+</body>
+</html>
